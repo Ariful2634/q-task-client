@@ -46,7 +46,7 @@ const UpdateTask = () => {
              <div className="hero lg:h-[90vh] w-full   mt-10 rounded-xl bg-base-200">
                 <div className="hero-content flex-col lg:flex-col ">
                     <div className="text-center  lg:text-left">
-                        <h1 className="text-3xl  font-bold">Add Task</h1>
+                        <h1 className="text-3xl  font-bold">Update Task</h1>
                     </div>
                     <div className="card shrink-0 lg:w-[320px] w-[300px] max-w-sm shadow-2xl  bg-base-100">
                         <form onSubmit={handleUpdate} className="card-body">
