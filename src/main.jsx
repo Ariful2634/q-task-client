@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       {
         path:'/updateTask/:id',
         element:<UpdateTask></UpdateTask>,
-        loader:()=>fetch('http://localhost:5000/task')
+        loader:()=>fetch('https://qt-ask-server.vercel.app/task')
       }
     ]
   },
