@@ -11,7 +11,7 @@ const AddTask = () => {
         const form = e.target;
         const task = form.task.value;
         const priority = form.priority.value;
-        const status = 'incomplete'
+        const status = 'Incomplete'
         const tasks = { task, priority,status }
         // console.log(tasks)
 
