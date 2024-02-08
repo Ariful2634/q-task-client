@@ -1,52 +1,61 @@
-import Swal from "sweetalert2";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 
-const AddTask = () => {
+const UpdateTask = () => {
+
+    const navigate = useNavigate()
+    const data = useLoaderData()
+    const {id}=useParams()
+    // console.log(data,id)
 
     const axiosPublic = useAxiosPublic()
 
-    const handleTask = e => {
+    const updateTask = data.find(task=>task._id==id)
+    // console.log(updateTask)
+    const {_id}=updateTask
+
+
+    const handleUpdate = e => {
         e.preventDefault()
         const form = e.target;
         const task = form.task.value;
         const priority = form.priority.value;
-        const status = 'Incomplete'
-        const tasks = { task, priority,status }
+        const tasks = { task, priority }
         // console.log(tasks)
 
-        axiosPublic.post("/task", tasks)
+        axiosPublic.put(`/update/${_id}`, tasks)
             .then(res => {
                 // console.log(res.data)
-                if(res.data.insertedId){
-                    form.reset()
+                if(res.data.modifiedCount > 0){
                     Swal.fire(
                         'Congratulations',
-                        'Task added Successfully!',
+                        'Task updated Successfully!',
                         'success'
                       )
                 }
+                navigate('/')
             })
-
-
+           
     }
 
+
     return (
-        <div className="lg:w-[600px] mx-auto w-[400px]">
-            
-            <div className="hero lg:h-[90vh] w-full   mt-10 rounded-xl bg-base-200">
+        <div>
+             <div className="hero lg:h-[90vh] w-full   mt-10 rounded-xl bg-base-200">
                 <div className="hero-content flex-col lg:flex-col ">
                     <div className="text-center  lg:text-left">
                         <h1 className="text-3xl  font-bold">Add Task</h1>
                     </div>
                     <div className="card shrink-0 lg:w-[320px] w-[300px] max-w-sm shadow-2xl  bg-base-100">
-                        <form onSubmit={handleTask} className="card-body">
+                        <form onSubmit={handleUpdate} className="card-body">
                             <div className="form-control">
                                 <label className="form-control">
                                     <div className="label">
                                         <span className="label-text">Write Your Task</span>
                                     </div>
-                                    <textarea name="task" className="textarea textarea-bordered h-24 " placeholder="Write Your Task" required></textarea>
+                                    <textarea defaultValue={updateTask.task} name="task" className="textarea textarea-bordered h-24 " placeholder="Write Your Task" required></textarea>
                                 </label>
                             </div>
                             <div className="form-control">
@@ -55,7 +64,7 @@ const AddTask = () => {
                                         <span className="label-text">Add Priority</span>
 
                                     </div>
-                                    <select name="priority" className="select select-bordered" required>
+                                    <select name="priority" className="select select-bordered" defaultValue={updateTask.priority} required>
                                         <option disabled selected>Pick one</option>
                                         <option>Low</option>
                                         <option>Medium</option>
@@ -75,4 +84,4 @@ const AddTask = () => {
     );
 };
 
-export default AddTask;
+export default UpdateTask;
